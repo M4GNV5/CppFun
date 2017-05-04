@@ -30,6 +30,7 @@
 
 #define NOT_1 0
 #define NOT_0 1
+#define B_NOT(X) JOIN2(NOT, X)
 #define NOT(X) (\
 		APPLY(JOIN2, NOT, EXTRACT_BIT(X, 7)),\
 		APPLY(JOIN2, NOT, EXTRACT_BIT(X, 6)),\
@@ -45,6 +46,7 @@
 #define AND_0_1 0
 #define AND_1_0 0
 #define AND_1_1 1
+#define B_AND(X, Y) JOIN2(AND, X, Y)
 #define AND(X, Y) (\
 		APPLY(JOIN3, AND, EXTRACT_BIT(X, 7), EXTRACT_BIT(Y, 7)),\
 		APPLY(JOIN3, AND, EXTRACT_BIT(X, 6), EXTRACT_BIT(Y, 6)),\
@@ -60,6 +62,7 @@
 #define OR_0_1 1
 #define OR_1_0 1
 #define OR_1_1 1
+#define B_OR(X, Y) JOIN2(OR, X, Y)
 #define OR(X, Y) (\
 		APPLY(JOIN3, OR, EXTRACT_BIT(X, 7), EXTRACT_BIT(Y, 7)),\
 		APPLY(JOIN3, OR, EXTRACT_BIT(X, 6), EXTRACT_BIT(Y, 6)),\
@@ -75,6 +78,7 @@
 #define XOR_0_1 1
 #define XOR_1_0 1
 #define XOR_1_1 0
+#define B_XOR(X, Y) JOIN2(XOR, X, Y)
 #define XOR(X, Y) (\
 		APPLY(JOIN3, XOR, EXTRACT_BIT(X, 7), EXTRACT_BIT(Y, 7)),\
 		APPLY(JOIN3, XOR, EXTRACT_BIT(X, 6), EXTRACT_BIT(Y, 6)),\
