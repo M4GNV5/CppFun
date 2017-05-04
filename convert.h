@@ -261,7 +261,7 @@
 #define CONST2BYTE_255 (1, 1, 1, 1, 1, 1, 1, 1)
 
 #define _BYTE2CONST(b7, b6, b5, b4, b3, b2, b1, b0) BYTE2CONST_##b7##_##b6##_##b5##_##b4##_##b3##_##b2##_##b1##_##b0
-#define BYTE2CONST(val) EVAL(_BYTE2CONST val)
+#define BYTE2CONST(val) _BYTE2CONST val
 #define BYTE2CONST_0_0_0_0_0_0_0_0 0
 #define BYTE2CONST_0_0_0_0_0_0_0_1 1
 #define BYTE2CONST_0_0_0_0_0_0_1_0 2

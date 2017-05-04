@@ -29,7 +29,7 @@ for(var i = 0; i < 256; i++)
 }
 
 fprintf(fd, "\n#define _BYTE2CONST(b7, b6, b5, b4, b3, b2, b1, b0) BYTE2CONST_##b7##_##b6##_##b5##_##b4##_##b3##_##b2##_##b1##_##b0\n");
-fprintf(fd, "#define BYTE2CONST(val) EVAL(_BYTE2CONST val)\n");
+fprintf(fd, "#define BYTE2CONST(val) _BYTE2CONST val\n");
 for(var i = 0; i < 256; i++)
 {
 	byet2bits(bits, i);
