@@ -11,6 +11,17 @@
 #define EXTRACT_BIT_0(b7, b6, b5, b4, b3, b2, b1, b0) b0
 #define EXTRACT_BIT(val, index) EXTRACT_BIT_##index val
 
+#define INSERT_BIT_7(b7, b6, b5, b4, b3, b2, b1, b0, bit) (bit, b6, b5, b4, b3, b2, b1, b0)
+#define INSERT_BIT_6(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b7, bit, b5, b4, b3, b2, b1, b0)
+#define INSERT_BIT_5(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b7, b6, bit, b4, b3, b2, b1, b0)
+#define INSERT_BIT_4(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b7, b6, b5, bit, b3, b2, b1, b0)
+#define INSERT_BIT_3(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b7, b6, b5, b4, bit, b2, b1, b0)
+#define INSERT_BIT_2(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b7, b6, b5, b4, b3, bit, b1, b0)
+#define INSERT_BIT_1(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b7, b6, b5, b4, b3, b2, bit, b0)
+#define INSERT_BIT_0(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b7, b6, b5, b4, b3, b2, b1, bit)
+#define BYTE2ARG(b7, b6, b5, b4, b3, b2, b1, b0) b7, b6, b5, b4, b3, b2, b1, b0
+#define INSERT_BIT(val, index, bit) APPLY(INSERT_BIT_##index, BYTE2ARG val, bit)
+
 #define _SHL(b7, b6, b5, b4, b3, b2, b1, b0) (b6, b5, b4, b3, b2, b1, b0, 0)
 #define SHL(val) _SHL val
 
