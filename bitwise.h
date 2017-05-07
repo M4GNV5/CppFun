@@ -28,6 +28,20 @@
 #define _SHR(b7, b6, b5, b4, b3, b2, b1, b0) (0, b7, b6, b5, b4, b3, b2, b1)
 #define SHR(val) _SHR val
 
+#define _ISZERO(b7, b6, b5, b4, b3, b2, b1, b0) NOT(\
+		OR( \
+			OR(
+				OR(b7, b6), \
+				OR(b5, b4) \
+			), \
+			OR( \
+				OR(b3, b2), \
+				OR(b1, b0) \
+			) \
+		) \
+	)
+#define ISZERO(X) _ISZERO X
+
 #define NOT_1 0
 #define NOT_0 1
 #define B_NOT(X) JOIN2(NOT, X)
