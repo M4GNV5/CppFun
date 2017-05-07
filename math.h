@@ -7,6 +7,23 @@
 #define ADD(X, Y) TAIL(ADC(X, Y, 0))
 #define SUB(X, Y) TAIL(ADC(X, NOT(Y), 1))
 
+//equal
+#define CMP_E(X, Y) ISZERO(XOR(X, Y))
+//not equal
+#define CMP_NE(X, Y) NOT(CMP_E(X, Y))
+
+//above
+#define CMP_A(X, Y) HEAD(ADC(X, NOT(Y), 1))
+#define _CMP_A(res) B_AND(HEAD(res), ISZERO(res))
+//bellow
+#define CMP_B(X, Y) HEAD(ADC(X, NOT(Y), 1))
+
+//above or equal
+#define CMP_AE(X, Y) B_NOT(CMP_B(X, Y))
+//below or equal
+#define CMP_BE(X, Y) B_NOT(CMP_A(X, Y))
+
+
 #define ADDBIT_0_0_0 0, 0
 #define ADDBIT_0_0_1 0, 1
 #define ADDBIT_0_1_0 0, 1
