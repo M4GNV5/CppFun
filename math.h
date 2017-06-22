@@ -15,7 +15,7 @@
 //above
 #define CMP_A(X, Y) HEAD(ADC(X, NOT(Y), 1))
 #define _CMP_A(res) B_AND(HEAD(res), ISZERO(res))
-//bellow
+//below
 #define CMP_B(X, Y) HEAD(ADC(X, NOT(Y), 1))
 
 //above or equal
