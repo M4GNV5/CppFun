@@ -31,19 +31,25 @@
 #define _SHR(b7, b6, b5, b4, b3, b2, b1, b0) (0, b7, b6, b5, b4, b3, b2, b1)
 #define SHR(val) _SHR val
 
-#define _ISZERO(b7, b6, b5, b4, b3, b2, b1, b0) NOT(\
-		OR( \
-			OR(
-				OR(b7, b6), \
-				OR(b5, b4) \
+#define _SHLIN(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b6, b5, b4, b3, b2, b1, b0, bit)
+#define SHLIN(val, bit) APPLY(_SHLIN, BYTE2ARG val, bit)
+
+#define _SHRIN(b7, b6, b5, b4, b3, b2, b1, b0, bit) (bit, b7, b6, b5, b4, b3, b2, b1)
+#define SHRIN(val, bit) APPLY(_SHRIN, BYTE2ARG val, bit)
+
+#define _ISNONZERO(b7, b6, b5, b4, b3, b2, b1, b0) B_OR( \
+			B_OR( \
+				B_OR(b7, b6), \
+				B_OR(b5, b4) \
 			), \
-			OR( \
-				OR(b3, b2), \
-				OR(b1, b0) \
+			B_OR( \
+				B_OR(b3, b2), \
+				B_OR(b1, b0) \
 			) \
-		) \
-	)
-#define ISZERO(X) _ISZERO X
+		)
+#define ISNONZERO(X) _ISNONZERO X
+
+#define ISZERO(X) B_NOT(ISNONZERO(X))
 
 #define NOT_1 0
 #define NOT_0 1
@@ -63,7 +69,7 @@
 #define AND_0_1 0
 #define AND_1_0 0
 #define AND_1_1 1
-#define B_AND(X, Y) JOIN2(AND, X, Y)
+#define B_AND(X, Y) JOIN3(AND, X, Y)
 #define AND(X, Y) (\
 		APPLY(JOIN3, AND, EXTRACT_BIT(X, 7), EXTRACT_BIT(Y, 7)),\
 		APPLY(JOIN3, AND, EXTRACT_BIT(X, 6), EXTRACT_BIT(Y, 6)),\
@@ -79,7 +85,7 @@
 #define OR_0_1 1
 #define OR_1_0 1
 #define OR_1_1 1
-#define B_OR(X, Y) JOIN2(OR, X, Y)
+#define B_OR(X, Y) JOIN3(OR, X, Y)
 #define OR(X, Y) (\
 		APPLY(JOIN3, OR, EXTRACT_BIT(X, 7), EXTRACT_BIT(Y, 7)),\
 		APPLY(JOIN3, OR, EXTRACT_BIT(X, 6), EXTRACT_BIT(Y, 6)),\
@@ -95,7 +101,7 @@
 #define XOR_0_1 1
 #define XOR_1_0 1
 #define XOR_1_1 0
-#define B_XOR(X, Y) JOIN2(XOR, X, Y)
+#define B_XOR(X, Y) JOIN3(XOR, X, Y)
 #define XOR(X, Y) (\
 		APPLY(JOIN3, XOR, EXTRACT_BIT(X, 7), EXTRACT_BIT(Y, 7)),\
 		APPLY(JOIN3, XOR, EXTRACT_BIT(X, 6), EXTRACT_BIT(Y, 6)),\
