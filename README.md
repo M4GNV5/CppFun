@@ -1,5 +1,5 @@
 # C pre-processor fun
-Math in the C pre-processor by breaking up Numbers into arrays of 8 bits and implementing common operations on thise arrays.
+Math in the C pre-processor by breaking up Numbers into arrays of 8 bits and implementing common operations on those arrays.
 
 ## Stuff it can do
 ```C
