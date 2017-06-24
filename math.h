@@ -12,14 +12,14 @@
 //not equal
 #define CMP_NE(X, Y) NOT(CMP_E(X, Y))
 
-//above
-#define CMP_A(X, Y) HEAD(ADC(X, NOT(Y), 1))
-#define _CMP_A(res) B_AND(HEAD(res), ISZERO(res))
-//below
-#define CMP_B(X, Y) HEAD(ADC(X, NOT(Y), 1))
-
 //above or equal
-#define CMP_AE(X, Y) B_NOT(CMP_B(X, Y))
+#define CMP_AE(X, Y) HEAD(ADC(X, NOT(Y), 1))
+//below
+#define CMP_B(X, Y) B_NOT(CMP_AE(X, Y))
+
+//above
+#define _CMP_A(res) HEAD(res), ISNONZERO(TAIL(res))
+#define CMP_A(X, Y) _CMP_A(ADC(X, NOT(Y), 1))
 //below or equal
 #define CMP_BE(X, Y) B_NOT(CMP_A(X, Y))
 
@@ -66,6 +66,40 @@
 #define MUL4(X, Y) ADDIF(EXTRACT_BIT(Y, 4), MUL5(SHL(X), Y), X)
 #define MUL5(X, Y) ADDIF(EXTRACT_BIT(Y, 5), MUL6(SHL(X), Y), X)
 #define MUL6(X, Y) ADDIF(EXTRACT_BIT(Y, 6), MUL7(SHL(X), Y), X)
-#define MUL7(X, Y) ADDIF(EXTRACT_BIT(Y, 7), (0,0,0,0,0,0,0,0), X)
+#define MUL7(X, Y) ADDIF(EXTRACT_BIT(Y, 7), CONST2BYTE(0), X)
+
+#define DIVSTEP_1(step, X, Y, quot, rem) INSERT_BIT(quot, step, 1), SUB(rem, Y)
+#define DIVSTEP_0(step, X, Y, quot, rem) quot, rem
+#define __DIVSTEP(cond, step, X, Y, quot, rem) JOIN2(DIVSTEP, cond)(step, X, Y, quot, rem)
+#define _DIVSTEP(step, X, Y, quot, rem) __DIVSTEP(CMP_AE(rem, Y), step, X, Y, quot, rem)
+#define DIVSTEP(step, X, Y, quot, rem) _DIVSTEP(step, X, Y, quot, SHLIN(rem, EXTRACT_BIT(X, step)))
+
+#define APPLY0(F, ...) F(__VA_ARGS__)
+#define APPLY1(F, ...) F(__VA_ARGS__)
+#define APPLY2(F, ...) F(__VA_ARGS__)
+#define APPLY3(F, ...) F(__VA_ARGS__)
+#define APPLY4(F, ...) F(__VA_ARGS__)
+#define APPLY5(F, ...) F(__VA_ARGS__)
+#define APPLY6(F, ...) F(__VA_ARGS__)
+
+#define DIVMOD(X, Y) \
+	APPLY0(DIVSTEP, 0, X, Y, \
+		APPLY1(DIVSTEP, 1, X, Y, \
+			APPLY2(DIVSTEP, 2, X, Y, \
+				APPLY3(DIVSTEP, 3, X, Y, \
+					APPLY4(DIVSTEP, 4, X, Y, \
+						APPLY5(DIVSTEP, 5, X, Y, \
+							APPLY6(DIVSTEP, 6, X, Y, \
+								DIVSTEP(7, X, Y, CONST2BYTE(0), CONST2BYTE(0)) \
+							) \
+						) \
+					) \
+				) \
+			) \
+		) \
+	)
+
+#define DIV(X, Y) HEAD((DIVMOD(X, Y)))
+#define MOD(X, Y) TAIL((DIVMOD(X, Y)))
 
 #endif
