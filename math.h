@@ -4,9 +4,6 @@
 #include "common.h"
 #include "bitwise.h"
 
-#define ADD(X, Y) TAIL(ADC(X, Y, 0))
-#define SUB(X, Y) TAIL(ADC(X, NOT(Y), 1))
-
 //equal
 #define CMP_E(X, Y) ISZERO(XOR(X, Y))
 //not equal
@@ -54,6 +51,9 @@
 			)\
 		)\
 	)
+
+#define ADD(X, Y) TAIL(ADC(X, Y, 0))
+#define SUB(X, Y) TAIL(ADC(X, NOT(Y), 1))
 
 #define ADDIF_1(X, Y) ADD(X, Y)
 #define ADDIF_0(X, Y) X
