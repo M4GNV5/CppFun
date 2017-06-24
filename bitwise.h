@@ -23,7 +23,7 @@
 #define INSERT_BIT_2(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b7, b6, b5, b4, b3, bit, b1, b0)
 #define INSERT_BIT_1(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b7, b6, b5, b4, b3, b2, bit, b0)
 #define INSERT_BIT_0(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b7, b6, b5, b4, b3, b2, b1, bit)
-#define INSERT_BIT(val, index, bit) JOIN2(INSERT_BIT, index)(BYTE2ARG val, bit)
+#define INSERT_BIT(val, index, bit) APPLY(JOIN2(INSERT_BIT, index), BYTE2ARG val, bit)
 
 #define _SHL(b7, b6, b5, b4, b3, b2, b1, b0) (b6, b5, b4, b3, b2, b1, b0, 0)
 #define SHL(val) _SHL val
