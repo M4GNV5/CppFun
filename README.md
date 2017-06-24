@@ -3,20 +3,27 @@ Math in the C pre-processor by breaking up Numbers into arrays of 8 bits and imp
 
 ## Stuff it can do
 ```C
+#include "convert.h"
 #include "math.h"
 
-//this is esentially 6 * (16 - 13)
+//this is esentially (6 / 2) * (15 - 13)
 BYTE2CONST(
 	MUL(
-		CONST2BYTE(6),
-		SUB(CONST2BYTE(16), CONST2BYTE(13))
+		DIV(
+			CONST2BYTE(6),
+			CONST2BYTE(2)
+		),
+		SUB(
+			CONST2BYTE(15),
+			CONST2BYTE(13)
+		)
 	)
 )
 ```
 
 running with `cpp test.h` gives
 ```
-18
+6
 ```
 
 ## See also
