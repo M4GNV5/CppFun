@@ -1,6 +1,10 @@
 #ifndef _CPPFUN_COMPARE_H
 #define _CPPFUN_COMPARE_H
 
+#include "common.h"
+#include "bitwise.h"
+#include "math.h"
+
 //equal
 #define CMP_E(X, Y) ISZERO(XOR(X, Y))
 //not equal
