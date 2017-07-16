@@ -25,8 +25,8 @@ int main(char **args)
 		return EXIT_FAILURE;
 	}
 
-	fprintf(fd, "#ifndef _CPPFUN_CONVERTY_H\n");
-	fprintf(fd, "#define _CPPFUN_CONVERTY_H\n\n");
+	fprintf(fd, "#ifndef _CPPFUN_CONVERT_H\n");
+	fprintf(fd, "#define _CPPFUN_CONVERT_H\n\n");
 	fprintf(fd, "#include \"common.h\"\n\n");
 
 	fprintf(fd, "#define CONST2BYTE(val) JOIN2(CONST2BYTE, val)\n");
