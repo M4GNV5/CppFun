@@ -43,13 +43,13 @@
 #define ADDIF_0(X, Y) X
 #define ADDIF(cond, X, Y) JOIN2(ADDIF, cond)(X, Y)
 
-#define MUL(X, Y) ADDIF(EXTRACT_BIT(Y, 0), MUL1(SHL(X), Y), X)
-#define MUL1(X, Y) ADDIF(EXTRACT_BIT(Y, 1), MUL2(SHL(X), Y), X)
-#define MUL2(X, Y) ADDIF(EXTRACT_BIT(Y, 2), MUL3(SHL(X), Y), X)
-#define MUL3(X, Y) ADDIF(EXTRACT_BIT(Y, 3), MUL4(SHL(X), Y), X)
-#define MUL4(X, Y) ADDIF(EXTRACT_BIT(Y, 4), MUL5(SHL(X), Y), X)
-#define MUL5(X, Y) ADDIF(EXTRACT_BIT(Y, 5), MUL6(SHL(X), Y), X)
-#define MUL6(X, Y) ADDIF(EXTRACT_BIT(Y, 6), MUL7(SHL(X), Y), X)
+#define MUL(X, Y) ADDIF(EXTRACT_BIT(Y, 0), MUL1(SHL1(X), Y), X)
+#define MUL1(X, Y) ADDIF(EXTRACT_BIT(Y, 1), MUL2(SHL1(X), Y), X)
+#define MUL2(X, Y) ADDIF(EXTRACT_BIT(Y, 2), MUL3(SHL1(X), Y), X)
+#define MUL3(X, Y) ADDIF(EXTRACT_BIT(Y, 3), MUL4(SHL1(X), Y), X)
+#define MUL4(X, Y) ADDIF(EXTRACT_BIT(Y, 4), MUL5(SHL1(X), Y), X)
+#define MUL5(X, Y) ADDIF(EXTRACT_BIT(Y, 5), MUL6(SHL1(X), Y), X)
+#define MUL6(X, Y) ADDIF(EXTRACT_BIT(Y, 6), MUL7(SHL1(X), Y), X)
 #define MUL7(X, Y) ADDIF(EXTRACT_BIT(Y, 7), CONST2BYTE(0), X)
 
 #define DIVSTEP_1(step, X, Y, quot, rem) INSERT_BIT(quot, step, 1), SUB(rem, Y)

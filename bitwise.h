@@ -25,17 +25,45 @@
 #define INSERT_BIT_0(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b7, b6, b5, b4, b3, b2, b1, bit)
 #define INSERT_BIT(val, index, bit) APPLY(JOIN2(INSERT_BIT, index), BYTE2ARG val, bit)
 
-#define _SHL(b7, b6, b5, b4, b3, b2, b1, b0) (b6, b5, b4, b3, b2, b1, b0, 0)
-#define SHL(val) _SHL val
+#define _SHL1(b7, b6, b5, b4, b3, b2, b1, b0) (b6, b5, b4, b3, b2, b1, b0, 0)
+#define SHL1(val) _SHL1 val
 
-#define _SHR(b7, b6, b5, b4, b3, b2, b1, b0) (0, b7, b6, b5, b4, b3, b2, b1)
-#define SHR(val) _SHR val
+#define _SHR1(b7, b6, b5, b4, b3, b2, b1, b0) (0, b7, b6, b5, b4, b3, b2, b1)
+#define SHR1(val) _SHR1 val
 
 #define _SHLIN(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b6, b5, b4, b3, b2, b1, b0, bit)
 #define SHLIN(val, bit) APPLY(_SHLIN, BYTE2ARG val, bit)
 
 #define _SHRIN(b7, b6, b5, b4, b3, b2, b1, b0, bit) (bit, b7, b6, b5, b4, b3, b2, b1)
 #define SHRIN(val, bit) APPLY(_SHRIN, BYTE2ARG val, bit)
+
+#define SHL_4_1(b7, b6, b5, b4, b3, b2, b1, b0) b3, b2, b1, b0, 0, 0, 0, 0
+#define SHL_2_1(b7, b6, b5, b4, b3, b2, b1, b0) b5, b4, b3, b2, b1, b0, 0, 0
+#define SHL_1_1(b7, b6, b5, b4, b3, b2, b1, b0) b6, b5, b4, b3, b2, b1, b0, 0
+#define SHL_4_0(b7, b6, b5, b4, b3, b2, b1, b0) b7, b6, b5, b4, b3, b2, b1, b0
+#define SHL_2_0(b7, b6, b5, b4, b3, b2, b1, b0) b7, b6, b5, b4, b3, b2, b1, b0
+#define SHL_1_0(b7, b6, b5, b4, b3, b2, b1, b0) b7, b6, b5, b4, b3, b2, b1, b0
+#define _SHL(val, a7, a6, a5, a4, a3, a2, a1, a0) \
+	(APPLY0(JOIN2(SHL_1, a0), \
+		APPLY1(JOIN2(SHL_2, a1), \
+			APPLY2(JOIN2(SHL_4, a2), BYTE2ARG val) \
+		) \
+	))
+#define SHL(val, amount) APPLY(_SHL, val, BYTE2ARG amount)
+
+#define SHR_4_1(b7, b6, b5, b4, b3, b2, b1, b0) 0, 0, 0, 0, b7, b6, b5, b4
+#define SHR_2_1(b7, b6, b5, b4, b3, b2, b1, b0) 0, 0, b7, b6, b5, b4, b3, b2
+#define SHR_1_1(b7, b6, b5, b4, b3, b2, b1, b0) 0, b7, b6, b5, b4, b3, b2, b1
+#define SHR_4_0(b7, b6, b5, b4, b3, b2, b1, b0) b7, b6, b5, b4, b3, b2, b1, b0
+#define SHR_2_0(b7, b6, b5, b4, b3, b2, b1, b0) b7, b6, b5, b4, b3, b2, b1, b0
+#define SHR_1_0(b7, b6, b5, b4, b3, b2, b1, b0) b7, b6, b5, b4, b3, b2, b1, b0
+#define _SHR(val, a7, a6, a5, a4, a3, a2, a1, a0) \
+	(APPLY0(JOIN2(SHR_1, a0), \
+		APPLY1(JOIN2(SHR_2, a1), \
+			APPLY2(JOIN2(SHR_4, a2), BYTE2ARG val) \
+		) \
+	))
+#define SHR(val, amount) APPLY(_SHR, val, BYTE2ARG amount)
 
 #define _ISNONZERO(b7, b6, b5, b4, b3, b2, b1, b0) B_OR( \
 			B_OR( \
