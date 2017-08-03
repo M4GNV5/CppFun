@@ -58,14 +58,6 @@
 #define _DIVSTEP(step, X, Y, quot, rem) __DIVSTEP(CMP_AE(rem, Y), step, X, Y, quot, rem)
 #define DIVSTEP(step, X, Y, quot, rem) _DIVSTEP(step, X, Y, quot, SHLIN(rem, EXTRACT_BIT(X, step)))
 
-#define APPLY0(F, ...) F(__VA_ARGS__)
-#define APPLY1(F, ...) F(__VA_ARGS__)
-#define APPLY2(F, ...) F(__VA_ARGS__)
-#define APPLY3(F, ...) F(__VA_ARGS__)
-#define APPLY4(F, ...) F(__VA_ARGS__)
-#define APPLY5(F, ...) F(__VA_ARGS__)
-#define APPLY6(F, ...) F(__VA_ARGS__)
-
 #define DIVMOD(X, Y) \
 	APPLY0(DIVSTEP, 0, X, Y, \
 		APPLY1(DIVSTEP, 1, X, Y, \

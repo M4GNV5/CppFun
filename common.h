@@ -8,6 +8,14 @@
 #define EVAL(...) __VA_ARGS__
 #define APPLY(F, ...) F(__VA_ARGS__)
 
+#define APPLY0(F, ...) F(__VA_ARGS__)
+#define APPLY1(F, ...) F(__VA_ARGS__)
+#define APPLY2(F, ...) F(__VA_ARGS__)
+#define APPLY3(F, ...) F(__VA_ARGS__)
+#define APPLY4(F, ...) F(__VA_ARGS__)
+#define APPLY5(F, ...) F(__VA_ARGS__)
+#define APPLY6(F, ...) F(__VA_ARGS__)
+
 
 
 #define LIST_HEAD(X, ...) X
