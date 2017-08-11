@@ -18,10 +18,10 @@
 
 
 
-#define LIST_HEAD(X, ...) X
-#define LIST_TAIL(X, ...) (__VA_ARGS__)
+#define _HEAD(X, ...) X
+#define HEAD(X) _HEAD X
 
-#define HEAD(L) LIST_HEAD L
-#define TAIL(L) LIST_TAIL L
+#define _TAIL(X, ...) (__VA_ARGS__)
+#define TAIL(X) _TAIL X
 
 #endif
