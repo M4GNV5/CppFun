@@ -5,6 +5,30 @@
 
 #define BYTE2ARG(b7, b6, b5, b4, b3, b2, b1, b0) b7, b6, b5, b4, b3, b2, b1, b0
 
+#define _MAP(func, b7, b6, b5, b4, b3, b2, b1, b0) ( \
+		func(b7),\
+		func(b6),\
+		func(b5),\
+		func(b4),\
+		func(b3),\
+		func(b2),\
+		func(b1),\
+		func(b0)\
+	)
+#define MAP(func, val) APPLY(_MAP, func, BYTE2ARG val)
+
+#define _MAP2(func, a7, a6, a5, a4, a3, a2, a1, a0, b7, b6, b5, b4, b3, b2, b1, b0) ( \
+		func(a7, b7),\
+		func(a6, b6),\
+		func(a5, b5),\
+		func(a4, b4),\
+		func(a3, b3),\
+		func(a2, b2),\
+		func(a1, b1),\
+		func(a0, b0)\
+	)
+#define MAP2(func, a, b) APPLY(_MAP2, func, BYTE2ARG a, BYTE2ARG b)
+
 #define EXTRACT_BIT_7(b7, b6, b5, b4, b3, b2, b1, b0) b7
 #define EXTRACT_BIT_6(b7, b6, b5, b4, b3, b2, b1, b0) b6
 #define EXTRACT_BIT_5(b7, b6, b5, b4, b3, b2, b1, b0) b5
@@ -82,63 +106,27 @@
 #define NOT_1 0
 #define NOT_0 1
 #define B_NOT(X) JOIN2(NOT, X)
-#define NOT(X) (\
-		APPLY(JOIN2, NOT, EXTRACT_BIT(X, 7)),\
-		APPLY(JOIN2, NOT, EXTRACT_BIT(X, 6)),\
-		APPLY(JOIN2, NOT, EXTRACT_BIT(X, 5)),\
-		APPLY(JOIN2, NOT, EXTRACT_BIT(X, 4)),\
-		APPLY(JOIN2, NOT, EXTRACT_BIT(X, 3)),\
-		APPLY(JOIN2, NOT, EXTRACT_BIT(X, 2)),\
-		APPLY(JOIN2, NOT, EXTRACT_BIT(X, 1)),\
-		APPLY(JOIN2, NOT, EXTRACT_BIT(X, 0))\
-	)
+#define NOT(X) MAP(B_NOT, X)
 
 #define AND_0_0 0
 #define AND_0_1 0
 #define AND_1_0 0
 #define AND_1_1 1
 #define B_AND(X, Y) JOIN3(AND, X, Y)
-#define AND(X, Y) (\
-		APPLY(JOIN3, AND, EXTRACT_BIT(X, 7), EXTRACT_BIT(Y, 7)),\
-		APPLY(JOIN3, AND, EXTRACT_BIT(X, 6), EXTRACT_BIT(Y, 6)),\
-		APPLY(JOIN3, AND, EXTRACT_BIT(X, 5), EXTRACT_BIT(Y, 5)),\
-		APPLY(JOIN3, AND, EXTRACT_BIT(X, 4), EXTRACT_BIT(Y, 4)),\
-		APPLY(JOIN3, AND, EXTRACT_BIT(X, 3), EXTRACT_BIT(Y, 3)),\
-		APPLY(JOIN3, AND, EXTRACT_BIT(X, 2), EXTRACT_BIT(Y, 2)),\
-		APPLY(JOIN3, AND, EXTRACT_BIT(X, 1), EXTRACT_BIT(Y, 1)),\
-		APPLY(JOIN3, AND, EXTRACT_BIT(X, 0), EXTRACT_BIT(Y, 0))\
-	)
+#define AND(X, Y) MAP2(B_AND, X, Y)
 
 #define OR_0_0 0
 #define OR_0_1 1
 #define OR_1_0 1
 #define OR_1_1 1
 #define B_OR(X, Y) JOIN3(OR, X, Y)
-#define OR(X, Y) (\
-		APPLY(JOIN3, OR, EXTRACT_BIT(X, 7), EXTRACT_BIT(Y, 7)),\
-		APPLY(JOIN3, OR, EXTRACT_BIT(X, 6), EXTRACT_BIT(Y, 6)),\
-		APPLY(JOIN3, OR, EXTRACT_BIT(X, 5), EXTRACT_BIT(Y, 5)),\
-		APPLY(JOIN3, OR, EXTRACT_BIT(X, 4), EXTRACT_BIT(Y, 4)),\
-		APPLY(JOIN3, OR, EXTRACT_BIT(X, 3), EXTRACT_BIT(Y, 3)),\
-		APPLY(JOIN3, OR, EXTRACT_BIT(X, 2), EXTRACT_BIT(Y, 2)),\
-		APPLY(JOIN3, OR, EXTRACT_BIT(X, 1), EXTRACT_BIT(Y, 1)),\
-		APPLY(JOIN3, OR, EXTRACT_BIT(X, 0), EXTRACT_BIT(Y, 0))\
-	)
+#define OR(X, Y) MAP2(B_OR, X, Y)
 
 #define XOR_0_0 0
 #define XOR_0_1 1
 #define XOR_1_0 1
 #define XOR_1_1 0
 #define B_XOR(X, Y) JOIN3(XOR, X, Y)
-#define XOR(X, Y) (\
-		APPLY(JOIN3, XOR, EXTRACT_BIT(X, 7), EXTRACT_BIT(Y, 7)),\
-		APPLY(JOIN3, XOR, EXTRACT_BIT(X, 6), EXTRACT_BIT(Y, 6)),\
-		APPLY(JOIN3, XOR, EXTRACT_BIT(X, 5), EXTRACT_BIT(Y, 5)),\
-		APPLY(JOIN3, XOR, EXTRACT_BIT(X, 4), EXTRACT_BIT(Y, 4)),\
-		APPLY(JOIN3, XOR, EXTRACT_BIT(X, 3), EXTRACT_BIT(Y, 3)),\
-		APPLY(JOIN3, XOR, EXTRACT_BIT(X, 2), EXTRACT_BIT(Y, 2)),\
-		APPLY(JOIN3, XOR, EXTRACT_BIT(X, 1), EXTRACT_BIT(Y, 1)),\
-		APPLY(JOIN3, XOR, EXTRACT_BIT(X, 0), EXTRACT_BIT(Y, 0))\
-	)
+#define XOR(X, Y) MAP2(B_OR, X, Y)
 
 #endif
