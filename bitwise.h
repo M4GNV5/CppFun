@@ -29,6 +29,36 @@
 	)
 #define MAP2(func, a, b) APPLY(_MAP2, func, BYTE2ARG a, BYTE2ARG b)
 
+
+
+#define NOT_1 0
+#define NOT_0 1
+#define B_NOT(X) JOIN2(NOT, X)
+#define NOT(X) MAP(B_NOT, X)
+
+#define AND_0_0 0
+#define AND_0_1 0
+#define AND_1_0 0
+#define AND_1_1 1
+#define B_AND(X, Y) JOIN3(AND, X, Y)
+#define AND(X, Y) MAP2(B_AND, X, Y)
+
+#define OR_0_0 0
+#define OR_0_1 1
+#define OR_1_0 1
+#define OR_1_1 1
+#define B_OR(X, Y) JOIN3(OR, X, Y)
+#define OR(X, Y) MAP2(B_OR, X, Y)
+
+#define XOR_0_0 0
+#define XOR_0_1 1
+#define XOR_1_0 1
+#define XOR_1_1 0
+#define B_XOR(X, Y) JOIN3(XOR, X, Y)
+#define XOR(X, Y) MAP2(B_OR, X, Y)
+
+
+
 #define EXTRACT_BIT_7(b7, b6, b5, b4, b3, b2, b1, b0) b7
 #define EXTRACT_BIT_6(b7, b6, b5, b4, b3, b2, b1, b0) b6
 #define EXTRACT_BIT_5(b7, b6, b5, b4, b3, b2, b1, b0) b5
@@ -48,6 +78,24 @@
 #define INSERT_BIT_1(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b7, b6, b5, b4, b3, b2, bit, b0)
 #define INSERT_BIT_0(b7, b6, b5, b4, b3, b2, b1, b0, bit) (b7, b6, b5, b4, b3, b2, b1, bit)
 #define INSERT_BIT(val, index, bit) APPLY(JOIN2(INSERT_BIT, index), BYTE2ARG val, bit)
+
+
+
+#define _ISNONZERO(b7, b6, b5, b4, b3, b2, b1, b0) B_OR( \
+			B_OR( \
+				B_OR(b7, b6), \
+				B_OR(b5, b4) \
+			), \
+			B_OR( \
+				B_OR(b3, b2), \
+				B_OR(b1, b0) \
+			) \
+		)
+#define ISNONZERO(X) _ISNONZERO X
+
+#define ISZERO(X) B_NOT(ISNONZERO(X))
+
+
 
 #define _SHL1(b7, b6, b5, b4, b3, b2, b1, b0) (b6, b5, b4, b3, b2, b1, b0, 0)
 #define SHL1(val) _SHL1 val
@@ -88,45 +136,5 @@
 		) \
 	))
 #define SHR(val, amount) APPLY(_SHR, val, BYTE2ARG amount)
-
-#define _ISNONZERO(b7, b6, b5, b4, b3, b2, b1, b0) B_OR( \
-			B_OR( \
-				B_OR(b7, b6), \
-				B_OR(b5, b4) \
-			), \
-			B_OR( \
-				B_OR(b3, b2), \
-				B_OR(b1, b0) \
-			) \
-		)
-#define ISNONZERO(X) _ISNONZERO X
-
-#define ISZERO(X) B_NOT(ISNONZERO(X))
-
-#define NOT_1 0
-#define NOT_0 1
-#define B_NOT(X) JOIN2(NOT, X)
-#define NOT(X) MAP(B_NOT, X)
-
-#define AND_0_0 0
-#define AND_0_1 0
-#define AND_1_0 0
-#define AND_1_1 1
-#define B_AND(X, Y) JOIN3(AND, X, Y)
-#define AND(X, Y) MAP2(B_AND, X, Y)
-
-#define OR_0_0 0
-#define OR_0_1 1
-#define OR_1_0 1
-#define OR_1_1 1
-#define B_OR(X, Y) JOIN3(OR, X, Y)
-#define OR(X, Y) MAP2(B_OR, X, Y)
-
-#define XOR_0_0 0
-#define XOR_0_1 1
-#define XOR_1_0 1
-#define XOR_1_1 0
-#define B_XOR(X, Y) JOIN3(XOR, X, Y)
-#define XOR(X, Y) MAP2(B_OR, X, Y)
 
 #endif
