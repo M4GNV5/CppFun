@@ -55,7 +55,7 @@
 #define XOR_1_0 1
 #define XOR_1_1 0
 #define B_XOR(X, Y) JOIN3(XOR, X, Y)
-#define XOR(X, Y) MAP2(B_OR, X, Y)
+#define XOR(X, Y) MAP2(B_XOR, X, Y)
 
 
 
